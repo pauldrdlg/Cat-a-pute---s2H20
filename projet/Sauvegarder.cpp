@@ -2,7 +2,7 @@
 
 Sauvegarder::Sauvegarder()
 {
-	sauvegarde(10);
+	//sauvegarde(10);
 }
 
 Sauvegarder::~Sauvegarder()
