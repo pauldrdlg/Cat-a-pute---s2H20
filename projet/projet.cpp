@@ -44,11 +44,11 @@ Vecteur<T>::~Vecteur() {
 template <typename T>
 void Vecteur<T>::expand() {
 	_capacity *= 2;
-	T* tmp = new T[_capacity];
+	T * tmp = new T[_capacity];
 	for (int i = 0; i < _qty; i++) {
 		tmp[i] = _ptrArray[i];
 	}
-	delete[] _ptrArray;
+	delete _ptrArray;
 	_ptrArray = tmp;
 };
 
@@ -94,7 +94,7 @@ struct Player {
 
 class Game {
 private:
-	Player * _players;
+	Player ** _players;
 	int _numberOfPlayer;
 	int _round = 0;
 	int _initSequenceLenght = 3;
@@ -104,22 +104,22 @@ private:
 	char _sequenceOption[4] = { 'Q', 'W', 'E', 'R' };
 
 	bool _isGameOver();
-	bool _isPlayerAnswerGood(Vecteur<char> sequence, string answer);
-	void _addNextSequence(Player & player);
-	void _eleminatPlayer(Player & player);
+	bool _isPlayerAnswerGood(Vecteur<char> & sequence, string answer);
+	void _addNextSequence(Player * player);
+	void _eleminatPlayer(Player * player);
 	void _askQuestion(string question, string & answer);
-	void _test();
 public:
 	Game(int numberOfPlayer);
 	void play();
 };
 
 Game::Game(int numberOfPlayer) {
-	_players = new Player[numberOfPlayer];
+	_players = new Player *[numberOfPlayer];
 	_numberOfPlayer = numberOfPlayer;
 	if (_numberOfPlayer == 1) {
+		_players[0] = new Player;
 		cout << _message.askNameSingle;
-		cin >> _players[0].name;
+		cin >> _players[0]->name;
 		for (int i = 0; i < _initSequenceLenght; i++) {
 			_addNextSequence(_players[0]);
 		}
@@ -129,7 +129,7 @@ Game::Game(int numberOfPlayer) {
 		cout << _message.askNameMulti_1;
 		for (int i = 0; i < _numberOfPlayer; i++) {
 			cout << _message.askNameMulti_2 << _message.multiOrder[i] << _message.askNameMulti_3;
-			cin >> _players[i].name;
+			cin >> _players[i]->name;
 			cout << endl;
 			for (int i = 0; i < _initSequenceLenght; i++) {
 				_addNextSequence(_players[i]);
@@ -143,71 +143,66 @@ void Game::play() {
 	string playerAnswer;
 	char doNothing;
 	do {
-		_test();
+		string playerAnswer;
+		cout << _message.round << (_round + 1) << endl << endl;
+		for (int i = 0; i < _numberOfPlayer; i++) {
+			if (_players[i]->eliminated) continue;
+			cout << _players[i]->name << _message.askIsReady;
+			cout << _message.countDown;
+			sleep_for(1000ms);
+			for (int j = 3; j > 0; j--) {
+				cout << j << "... ";
+				sleep_for(1000ms);
+			}
+
+			cout << endl;
+
+			for (int j = 0; j < _players[i]->sequence.qty(); j++) {
+				char tmp = _players[i]->sequence.getElement(j);
+				cout << tmp;
+				cout << " ";
+				sleep_for(1000ms);
+			}
+
+			_askQuestion(_message.askEnterAnswer, playerAnswer);
+
+			if (_isPlayerAnswerGood(_players[i]->sequence, playerAnswer)) {
+				_eleminatPlayer(_players[i]);
+				cout << _message.eleminated;
+			}
+			else {
+				_addNextSequence(_players[i]);
+				cout << _message.goodAnswer;
+				for (int j = 0; j < _players[i]->sequence.qty(); j++) {
+					char tmp = _players[i]->sequence.getElement(j);
+					cout << tmp;
+					cout << " ";
+					sleep_for(1000ms);
+				}
+			}
+			sleep_for(1500ms);
+		}
+		_round++;
 	} while (!_isGameOver());
 };
 
-void Game::_test() {
-	string playerAnswer;
-	cout << _message.round << (_round + 1) << endl << endl;
-	for (int i = 0; i < _numberOfPlayer; i++) {
-		if (_players[i].eliminated) continue;
-		cout << _players[i].name << _message.askIsReady;
-		cout << _message.countDown;
-		sleep_for(1000ms);
-		for (int j = 3; j > 0; j--) {
-			cout << j << "... ";
-			sleep_for(1000ms);
-		}
-
-		cout << endl;
-
-		for (int j = 0; j < _players[i].sequence.qty(); j++) {
-			char tmp = _players[i].sequence.getElement(j);
-			cout << tmp;
-			cout << " ";
-			sleep_for(1000ms);
-		}
-		
-		_askQuestion(_message.askEnterAnswer, playerAnswer);
-
-		if (_isPlayerAnswerGood(_players[i].sequence, playerAnswer)) {
-			_eleminatPlayer(_players[i]);
-			cout << _message.eleminated;
-		}
-		else {
-			_addNextSequence(_players[i]);
-			cout << _message.goodAnswer;
-		}
-
-		
-		sleep_for(1500ms);
-	}
-	_round++;
-}
 
 bool Game::_isGameOver() {
 	for (int i = 0; i < _numberOfPlayer; i++) {
-		if (!_players[i].eliminated) {
+		if (!_players[i]->eliminated) {
 			return false;
 		}
 	}
 	return true;
 }
 
-void Game::_addNextSequence(Player & player) {
+void Game::_addNextSequence(Player * player) {
 	char option;
 	option = _sequenceOption[0];
-	player.sequence.add(option);
-	for (int j = 0; j < _players[i].sequence.qty(); j++) {
-		char tmp = _players[i].sequence.getElement(j);
-		cout << tmp;
-		cout << " ";
-		sleep_for(1000ms);
-	}
+	player->sequence.add(option);
 };
 
-bool Game::_isPlayerAnswerGood(Vecteur<char> sequence, string answer) {
+bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer) {
 	if (answer.length() / 2 == sequence.qty()) {
 		for (int i = 0; i < sequence.qty(); i++) {
 			if (sequence.getElement(i) != answer[i * 2]) {
@@ -219,9 +214,9 @@ bool Game::_isPlayerAnswerGood(Vecteur<char> sequence, string answer) {
 	return false;
 }
 
-void Game::_eleminatPlayer(Player & player) {
-	player.eliminated = true;
-	player.score = _round;
+void Game::_eleminatPlayer(Player * player) {
+	player->eliminated = true;
+	player->score = _round;
 }
 
 void Game::_askQuestion(string question, string & answer) {
