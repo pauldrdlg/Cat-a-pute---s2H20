@@ -12,7 +12,8 @@ using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
 template <typename T>
-class Vecteur {
+class Vecteur 
+{
 private:
 	T * _ptrArray;
 	int _capacity;
@@ -23,55 +24,68 @@ private:
 public:
 	Vecteur(int capacity = 1);
 	~Vecteur();
+
 	int qty();
 	T getElement(int index);
 	bool add(T element);
 };
 
 template<typename T>
-Vecteur<T>::Vecteur(int capacity) {
+Vecteur<T>::Vecteur(int capacity) 
+{
 	_capacity = capacity;
 	_qty = 0;
 	_ptrArray = new T[_capacity];
 };
 
 template<typename T>
-Vecteur<T>::~Vecteur() {
+Vecteur<T>::~Vecteur() 
+{
 	delete _ptrArray;
 	_qty = 0;
 };
 
 template <typename T>
-void Vecteur<T>::expand() {
+void Vecteur<T>::expand() 
+{
 	_capacity *= 2;
 	T * tmp = new T[_capacity];
-	for (int i = 0; i < _qty; i++) {
+
+	for (int i = 0; i < _qty; i++) 
+	{
 		tmp[i] = _ptrArray[i];
 	}
+
 	delete _ptrArray;
 	_ptrArray = tmp;
 };
 
 template <typename T>
-int Vecteur<T>::qty() {
+int Vecteur<T>::qty() 
+{
 	return _qty;
 };
 
 template <typename T>
-bool Vecteur<T>::add(T element) {
-	if (_qty == _capacity) {
+bool Vecteur<T>::add(T element) 
+{
+	if (_qty == _capacity) 
+	{
 		this->expand();
 	}
+
 	_ptrArray[_qty++] = element;
 	return true;
 };
 
 template <typename T>
-T Vecteur<T>::getElement(int index) {
+T Vecteur<T>::getElement(int index) 
+{
 	return (index >= 0 && index < _qty) ? _ptrArray[index] : NULL;
 };
 
-struct Message {
+struct Message 
+{
 	string askNameSingle = "Avant de commencer, je vais prendre votre nom:\n";
 	string multiOrder[4] = { "premier", "deuxiexe", "troisieme", "quatrieme" };
 	string askNameMulti_1 = "Avant de commencer, je vais prendre les noms de tous\n";
@@ -85,14 +99,16 @@ struct Message {
 	string goodAnswer = "Vous avez eu la bonne reponse! Continuer comme ca :)\n";
 };
 
-struct Player {
+struct Player 
+{
 	string name;
 	int score = 0;
 	bool eliminated = false;
 	Vecteur<char> sequence;
 };
 
-class Game {
+class Game 
+{
 private:
 	Player ** _players;
 	int _numberOfPlayer;
@@ -108,56 +124,76 @@ private:
 	void _addNextSequence(Player * player);
 	void _eleminatPlayer(Player * player);
 	void _askQuestion(string question, string & answer);
+
 public:
 	Game(int numberOfPlayer);
 	void play();
 };
 
-Game::Game(int numberOfPlayer) {
+Game::Game(int numberOfPlayer) 
+{
 	_players = new Player *[numberOfPlayer];
 	_numberOfPlayer = numberOfPlayer;
-	if (_numberOfPlayer == 1) {
+
+	if (_numberOfPlayer == 1) 
+	{
 		_players[0] = new Player;
 		cout << _message.askNameSingle;
 		cin >> _players[0]->name;
-		for (int i = 0; i < _initSequenceLenght; i++) {
+
+		for (int i = 0; i < _initSequenceLenght; i++) 
+		{
 			_addNextSequence(_players[0]);
 		}
+
 		sleep_for(1000ms);
 	}
-	else {
+	else 
+	{
 		cout << _message.askNameMulti_1;
-		for (int i = 0; i < _numberOfPlayer; i++) {
+
+		for (int i = 0; i < _numberOfPlayer; i++) 
+		{
 			cout << _message.askNameMulti_2 << _message.multiOrder[i] << _message.askNameMulti_3;
 			cin >> _players[i]->name;
 			cout << endl;
-			for (int i = 0; i < _initSequenceLenght; i++) {
+
+			for (int i = 0; i < _initSequenceLenght; i++) 
+			{
 				_addNextSequence(_players[i]);
 			}
+
 			sleep_for(1000ms);
 		}
 	}
 };
 
-void Game::play() {
+void Game::play() 
+{
 	string playerAnswer;
 	char doNothing;
-	do {
+	do 
+	{
 		string playerAnswer;
 		cout << _message.round << (_round + 1) << endl << endl;
-		for (int i = 0; i < _numberOfPlayer; i++) {
+
+		for (int i = 0; i < _numberOfPlayer; i++) 
+		{
 			if (_players[i]->eliminated) continue;
 			cout << _players[i]->name << _message.askIsReady;
 			cout << _message.countDown;
 			sleep_for(1000ms);
-			for (int j = 3; j > 0; j--) {
+
+			for (int j = 3; j > 0; j--) 
+			{
 				cout << j << "... ";
 				sleep_for(1000ms);
 			}
 
 			cout << endl;
 
-			for (int j = 0; j < _players[i]->sequence.qty(); j++) {
+			for (int j = 0; j < _players[i]->sequence.qty(); j++) 
+			{
 				char tmp = _players[i]->sequence.getElement(j);
 				cout << tmp;
 				cout << " ";
@@ -166,14 +202,18 @@ void Game::play() {
 
 			_askQuestion(_message.askEnterAnswer, playerAnswer);
 
-			if (_isPlayerAnswerGood(_players[i]->sequence, playerAnswer)) {
+			if (_isPlayerAnswerGood(_players[i]->sequence, playerAnswer)) 
+			{
 				_eleminatPlayer(_players[i]);
 				cout << _message.eleminated;
 			}
-			else {
+			else 
+			{
 				_addNextSequence(_players[i]);
 				cout << _message.goodAnswer;
-				for (int j = 0; j < _players[i]->sequence.qty(); j++) {
+
+				for (int j = 0; j < _players[i]->sequence.qty(); j++) 
+				{
 					char tmp = _players[i]->sequence.getElement(j);
 					cout << tmp;
 					cout << " ";
@@ -187,25 +227,33 @@ void Game::play() {
 };
 
 
-bool Game::_isGameOver() {
-	for (int i = 0; i < _numberOfPlayer; i++) {
-		if (!_players[i]->eliminated) {
+bool Game::_isGameOver() 
+{
+	for (int i = 0; i < _numberOfPlayer; i++) 
+	{
+		if (!_players[i]->eliminated) 
+		{
 			return false;
 		}
 	}
 	return true;
 }
 
-void Game::_addNextSequence(Player * player) {
+void Game::_addNextSequence(Player * player) 
+{
 	char option;
 	option = _sequenceOption[0];
 	player->sequence.add(option);
 };
 
-bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer) {
-	if (answer.length() / 2 == sequence.qty()) {
-		for (int i = 0; i < sequence.qty(); i++) {
-			if (sequence.getElement(i) != answer[i * 2]) {
+bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer) 
+{
+	if (answer.length() / 2 == sequence.qty()) 
+	{
+		for (int i = 0; i < sequence.qty(); i++) 
+		{
+			if (sequence.getElement(i) != answer[i * 2]) 
+			{
 				return false;
 			}
 		}
@@ -214,12 +262,14 @@ bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer) {
 	return false;
 }
 
-void Game::_eleminatPlayer(Player * player) {
+void Game::_eleminatPlayer(Player * player) 
+{
 	player->eliminated = true;
 	player->score = _round;
 }
 
-void Game::_askQuestion(string question, string & answer) {
+void Game::_askQuestion(string question, string & answer) 
+{
 	cout << question;
 	cin >> answer;
 }
