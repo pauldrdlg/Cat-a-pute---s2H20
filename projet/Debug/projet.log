@@ -1,0 +1,3 @@
+﻿  projet.cpp
+c:\users\kyramee\source\repos\projet\projet\projet.cpp(144): warning C4101: 'doNothing': unreferenced local variable
+  projet.vcxproj -> C:\Users\Kyramee\source\repos\projet\Debug\projet.exe
