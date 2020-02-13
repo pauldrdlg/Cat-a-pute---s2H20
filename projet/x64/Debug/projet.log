@@ -1,3 +1,3 @@
 ﻿  projet.cpp
-c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\projet.cpp(183): warning C4101: 'doNothing' : variable locale non référencée
+c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\player.h(4): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
   projet.vcxproj -> C:\Users\Utilisateur\Documents\SourceTree Repository\Cat-a-pute---s2H20\x64\Debug\projet.exe

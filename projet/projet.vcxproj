@@ -152,11 +152,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="projet.cpp" />
-    <ClCompile Include="Sauvegarder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Menu.h" />
-    <ClInclude Include="Sauvegarder.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="Vecteur.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
