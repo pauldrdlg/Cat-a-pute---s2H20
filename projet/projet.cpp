@@ -1,16 +1,24 @@
 //Used for cout and _message
 #include <iostream>
 #include <string>
+#include <conio.h>
 
 //Used for delay
 #include <thread>
 #include <chrono>
+
+//Used filed
+#include "Vecteur.h"
+#include "Menu.h"
+#include "Player.h"
+
 
 using namespace std;
 using namespace std::this_thread;     // sleep_for, sleep_until
 using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
 using std::chrono::system_clock;
 
+<<<<<<< HEAD
 template <typename T>
 class Vecteur 
 {
@@ -109,6 +117,9 @@ struct Player
 
 class Game 
 {
+=======
+class Game {
+>>>>>>> 136ae88515f5dd3c982d126ce3140435fe81a0cd
 private:
 	Player ** _players;
 	int _numberOfPlayer;
@@ -171,10 +182,14 @@ Game::Game(int numberOfPlayer)
 void Game::play() 
 {
 	string playerAnswer;
+<<<<<<< HEAD
 	char doNothing;
 	do 
 	{
 		string playerAnswer;
+=======
+	do {
+>>>>>>> 136ae88515f5dd3c982d126ce3140435fe81a0cd
 		cout << _message.round << (_round + 1) << endl << endl;
 
 		for (int i = 0; i < _numberOfPlayer; i++) 
@@ -202,6 +217,7 @@ void Game::play()
 
 			_askQuestion(_message.askEnterAnswer, playerAnswer);
 
+<<<<<<< HEAD
 			if (_isPlayerAnswerGood(_players[i]->sequence, playerAnswer)) 
 			{
 				_eleminatPlayer(_players[i]);
@@ -219,6 +235,15 @@ void Game::play()
 					cout << " ";
 					sleep_for(1000ms);
 				}
+=======
+			if (_isPlayerAnswerGood(_players[i]->sequence, playerAnswer)) {
+				_addNextSequence(_players[i]);
+				cout << _message.goodAnswer;
+			}
+			else {
+				_eleminatPlayer(_players[i]);
+				cout << _message.eleminated;
+>>>>>>> 136ae88515f5dd3c982d126ce3140435fe81a0cd
 			}
 			sleep_for(1500ms);
 		}
@@ -246,6 +271,7 @@ void Game::_addNextSequence(Player * player)
 	player->sequence.add(option);
 };
 
+<<<<<<< HEAD
 bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer) 
 {
 	if (answer.length() / 2 == sequence.qty()) 
@@ -254,6 +280,16 @@ bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer)
 		{
 			if (sequence.getElement(i) != answer[i * 2]) 
 			{
+=======
+bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer) {
+
+	if (answer.length() / 2 == sequence.qty()) {
+		for (int i = 0; i < sequence.qty(); i++) {
+			cout << answer[i * 2] << endl;
+			cout << sequence.getElement(i) << endl;
+
+			if (sequence.getElement(i) != answer[i * 2]) {
+>>>>>>> 136ae88515f5dd3c982d126ce3140435fe81a0cd
 				return false;
 			}
 		}
@@ -268,9 +304,16 @@ void Game::_eleminatPlayer(Player * player)
 	player->score = _round;
 }
 
+<<<<<<< HEAD
 void Game::_askQuestion(string question, string & answer) 
 {
 	cout << question;
+=======
+void Game::_askQuestion(string question, string & answer) {
+	cout << question << endl;
+	std::cin.clear();
+	std::cin.ignore();
+>>>>>>> 136ae88515f5dd3c982d126ce3140435fe81a0cd
 	cin >> answer;
 }
 
