@@ -1,7 +1,20 @@
 ﻿  Game.cpp
-c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\player.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\game.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\player.h(4): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
+c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\game.cpp(22): warning C4244: 'argument' : conversion de 'time_t' en 'unsigned int', perte possible de données
   projet.cpp
-c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\player.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Generating Code...
-  projet.vcxproj -> C:\Users\Kyramee\Documents\uni\h20\Cat-a-pute---s2H20\x64\Debug\projet.exe
+c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\player.h(4): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
+  Sauvegarder.cpp
+c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\player.h(4): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
+c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\vecteur.h(63): error C2446: ':' : pas de conversion de 'int' en 'T'
+          with
+          [
+              T=Player
+          ]
+  c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\vecteur.h(62): note: pendant la compilation de la fonction membre '<Inconnu>' (classe <Inconnu>)
+  c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\sauvegarder.cpp(12): note: voir la référence à l'instanciation de la fonction modèle 'T Vecteur<T>::getElement(int)' en cours de compilation
+          with
+          [
+              T=Player
+          ]
+  c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\sauvegarder.cpp(10): note: voir la référence à l'instanciation de classe modèle 'Vecteur<Player>' en cours de compilation
+  Génération de code en cours...
