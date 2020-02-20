@@ -2,9 +2,10 @@
 #define PLAYER_H
 
 #include "Vecteur.h";
+#include <string>
 
 struct Player {
-	string name;
+	std::string name;
 	int score = 0;
 	bool eliminated = false;
 	Vecteur<char> sequence;

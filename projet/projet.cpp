@@ -15,7 +15,7 @@
 
 using namespace std;
 using namespace std::this_thread;     // sleep_for, sleep_until
-using namespace std::chrono_literals; // ns, us, ms, s, h, etc.
+using namespace std::chrono_literals; // ns, us, 1000ms, s, h, etc.
 using std::chrono::system_clock;
 
 class Game {
@@ -40,24 +40,28 @@ public:
 };
 
 Game::Game(int numberOfPlayer) {
+	srand(time(0));
 	_players = new Player *[numberOfPlayer];
 	_numberOfPlayer = numberOfPlayer;
 	if (_numberOfPlayer == 1) {
 		_players[0] = new Player;
-		cout << _message.askNameSingle;
-		cin >> _players[0]->name;
+
+		_askQuestion(_message.askNameSingle, _players[0]->name);
+
 		for (int i = 0; i < _initSequenceLenght; i++) {
 			_addNextSequence(_players[0]);
 		}
+
 		sleep_for(1000ms);
 	}
 	else {
 		cout << _message.askNameMulti_1;
 		for (int i = 0; i < _numberOfPlayer; i++) {
-			cout << _message.askNameMulti_2 << _message.multiOrder[i] << _message.askNameMulti_3;
-			cin >> _players[i]->name;
+			_players[i] = new Player;
+			_askQuestion(_message.askNameMulti_2 + _message.multiOrder[i] + _message.askNameMulti_3, _players[i]->name);
+
 			cout << endl;
-			for (int i = 0; i < _initSequenceLenght; i++) {
+			for (int j = 0; j < _initSequenceLenght; j++) {
 				_addNextSequence(_players[i]);
 			}
 			sleep_for(1000ms);
@@ -67,13 +71,19 @@ Game::Game(int numberOfPlayer) {
 
 void Game::play() {
 	string playerAnswer;
+
 	do {
 		cout << _message.round << (_round + 1) << endl << endl;
 		for (int i = 0; i < _numberOfPlayer; i++) {
 			if (_players[i]->eliminated) continue;
-			cout << _players[i]->name << _message.askIsReady;
+
+			cout << _players[i]->name << _message.askIsReady << endl;
+
+			do {} while (cin.get() != '\n');
+
 			cout << _message.countDown;
 			sleep_for(1000ms);
+
 			for (int j = 3; j > 0; j--) {
 				cout << j << "... ";
 				sleep_for(1000ms);
@@ -98,7 +108,7 @@ void Game::play() {
 				_eleminatPlayer(_players[i]);
 				cout << _message.eleminated;
 			}
-			sleep_for(1500ms);
+			sleep_for(1000ms);
 		}
 		_round++;
 	} while (!_isGameOver());
@@ -115,19 +125,42 @@ bool Game::_isGameOver() {
 }
 
 void Game::_addNextSequence(Player * player) {
-	char option;
-	option = _sequenceOption[0];
-	player->sequence.add(option);
+	int sequenceOption;
+
+	do {
+		if (rand() % 2 == 1)
+		{
+			if (rand() % 2 == 1)
+			{
+				sequenceOption = 0;
+			}
+			else
+			{
+				sequenceOption = 1;
+			}
+		}
+		else
+		{
+			if (rand() % 2 == 0)
+			{
+				sequenceOption = 2;
+			}
+			else
+			{
+				sequenceOption = 3;
+			}
+		}
+	} while (sequenceOption == player->sequence.getElement(player->sequence.qty() - 1) && sequenceOption ==  player->sequence.getElement(player->sequence.qty() - 2));
+
+
+	player->sequence.add(_sequenceOption[sequenceOption]);
 };
 
 bool Game::_isPlayerAnswerGood(Vecteur<char> & sequence, string answer) {
 
-	if (answer.length() / 2 == sequence.qty()) {
+	if (answer.length() == sequence.qty() * 2 - 1) {
 		for (int i = 0; i < sequence.qty(); i++) {
-			cout << answer[i * 2] << endl;
-			cout << sequence.getElement(i) << endl;
-
-			if (sequence.getElement(i) != answer[i * 2]) {
+			if (sequence.getElement(i) != toupper(answer[i * 2])) {
 				return false;
 			}
 		}
@@ -143,9 +176,7 @@ void Game::_eleminatPlayer(Player * player) {
 
 void Game::_askQuestion(string question, string & answer) {
 	cout << question << endl;
-	std::cin.clear();
-	std::cin.ignore();
-	cin >> answer;
+	getline(cin >> ws, answer);
 }
 
 int main()

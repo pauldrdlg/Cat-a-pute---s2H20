@@ -1,3 +1,4 @@
 ﻿  projet.cpp
-c:\users\utilisateur\documents\sourcetree repository\cat-a-pute---s2h20\projet\player.h(4): warning C4067: jetons inattendus après la directive du préprocesseur - saut de ligne attendu
-  projet.vcxproj -> C:\Users\Utilisateur\Documents\SourceTree Repository\Cat-a-pute---s2H20\x64\Debug\projet.exe
+c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\player.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\projet.cpp(43): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  projet.vcxproj -> C:\Users\Kyramee\Documents\uni\h20\Cat-a-pute---s2H20\x64\Debug\projet.exe
