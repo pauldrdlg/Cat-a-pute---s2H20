@@ -17,5 +17,7 @@ struct Message {
 	string askEnterAnswer = "\nEntrer la sequence en separant les caracteres d'espace:";
 	string eleminated = "Vous n'avez pas rentre la bonne sequence! Vous etes elemine :(\n\n";
 	string goodAnswer = "Vous avez eu la bonne reponse! Continuer comme ca :)\n\n";
+	string mainMenu = "\nMENU PRINCIPAL\n1. Jouer en solo\n2. Jouer avec des \"amis\" (2-4)\n3. Voir la liste des meilleurs scores\n4. Quitter\nEntre le numero du menu: ";
+	string mainMenuERROR_1 = "\nVous n'avez pas entre une option valide\n";
 };
 #endif

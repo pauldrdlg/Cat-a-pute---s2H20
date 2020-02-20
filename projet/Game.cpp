@@ -20,33 +20,56 @@ using std::chrono::system_clock;
 
 Game::Game(int numberOfPlayer) {
 	srand(time(0));
-	_players = new Player *[numberOfPlayer];
+};
+
+Game::~Game() {
+	delete _players;
+}
+
+void Game::makeGame(int numberOfPlayer) {
+	
+	_players = new Player * [numberOfPlayer];
 	_numberOfPlayer = numberOfPlayer;
-	if (_numberOfPlayer == 1) {
-		_players[0] = new Player;
+	
+	if (_numberOfPlayer == 1) 
+	{
+		_makeSinglePlayerGame();
+	}
+	else 
+	{
+		_makeMultiPlayerGame();
+	}
+}
 
-		_askQuestion(_message.askNameSingle, _players[0]->name);
+void Game::_makeSinglePlayerGame() {
+	_players[0] = new Player;
 
-		for (int i = 0; i < _initSequenceLenght; i++) {
-			_addNextSequence(_players[0]);
+	_askQuestion(_message.askNameSingle, _players[0]->name);
+
+	for (int i = 0; i < _initSequenceLenght; i++) {
+		_addNextSequence(_players[0]);
+	}
+
+	sleep_for(1000ms);
+}
+
+void Game::_makeMultiPlayerGame() {
+	cout << _message.askNameMulti_1;
+	for (int i = 0; i < _numberOfPlayer; i++) {
+		_players[i] = new Player;
+		_askQuestion(_message.askNameMulti_2 + _message.multiOrder[i] + _message.askNameMulti_3, _players[i]->name);
+
+		cout << endl;
+		for (int j = 0; j < _initSequenceLenght; j++) {
+			_addNextSequence(_players[i]);
 		}
-
 		sleep_for(1000ms);
 	}
-	else {
-		cout << _message.askNameMulti_1;
-		for (int i = 0; i < _numberOfPlayer; i++) {
-			_players[i] = new Player;
-			_askQuestion(_message.askNameMulti_2 + _message.multiOrder[i] + _message.askNameMulti_3, _players[i]->name);
+}
 
-			cout << endl;
-			for (int j = 0; j < _initSequenceLenght; j++) {
-				_addNextSequence(_players[i]);
-			}
-			sleep_for(1000ms);
-		}
-	}
-};
+void Game::mainMenu() {
+	cout << _message.mainMenu;
+}
 
 void Game::play() {
 	string playerAnswer;

@@ -22,8 +22,13 @@ private:
 	void _addNextSequence(Player * player);
 	void _eleminatPlayer(Player * player);
 	void _askQuestion(string question, string & answer);
+	void _makeSinglePlayerGame();
+	void _makeMultiPlayerGame();
 public:
 	Game(int numberOfPlayer);
+	~Game();
+	void makeGame(int numberOfPlayer);
+	void mainMenu();
 	void play();
 };
 

@@ -3,11 +3,13 @@
 #include "Vecteur.h"
 #include "Player.h"
 
+using namespace std;
+
 int main()
 {
 	
 	Game g(1);
-	g.play();
+	g.mainMenu();
 	return 0;
 	/*
 	Sauvegarder sauv;
