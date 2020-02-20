@@ -1,4 +1,9 @@
-﻿  projet.cpp
+﻿  Game.cpp
 c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\player.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\projet.cpp(43): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\game.cpp(22): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  projet.cpp
+c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\player.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Sauvegarder.cpp
+c:\users\kyramee\documents\uni\h20\cat-a-pute---s2h20\projet\player.h(4): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Generating Code...
   projet.vcxproj -> C:\Users\Kyramee\Documents\uni\h20\Cat-a-pute---s2H20\x64\Debug\projet.exe

@@ -1,5 +1,8 @@
 #ifndef VECTEUR_H
 #define VECTEUR_H
+
+#include <iostream>
+
 template <typename T>
 class Vecteur {
 private:
